@@ -1,3 +1,13 @@
+const admin = require("firebase-admin");
+
+// Parse the JSON string from the environment variable
+const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT);
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://<your-project-id>.firebaseio.com" // replace with your actual Firestore DB URL if needed
+});
+
 const express = require('express');
 const admin = require('firebase-admin');
 const cors = require('cors');
