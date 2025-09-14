@@ -35,10 +35,13 @@ app.post('/data', async (req, res) => {
       status: normalizedStatus,
       lastChanged: admin.firestore.FieldValue.serverTimestamp()
     };
+// Use sensor_id as the document ID
+const docRef = db.collection('sensor_data').doc(sensor_id);
 
-    const docRef = await db.collection('sensor_data').add(data);
+await docRef.set(data, { merge: true });
 
-    res.status(200).send(`Sensor data stored with ID: ${docRef.id}`);
+res.status(200).send(`Sensor ${sensor_id} data updated successfully`);
+
   } catch (error) {
     console.error('Error storing data:', error);
     res.status(500).send(`Error: ${error.message}`);
